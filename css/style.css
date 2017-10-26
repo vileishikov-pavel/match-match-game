@@ -1,0 +1,118 @@
+html, body {
+    height: 100%;
+}
+body {
+    background: 
+    radial-gradient(circle at 50% 59%, #D2CAAB 3%, #364E27 4%, #364E27 11%, rgba(54,78,39,0) 12%, rgba(54,78,39,0)) 50px 0,
+    radial-gradient(circle at 50% 41%, #364E27 3%, #D2CAAB 4%, #D2CAAB 11%, rgba(210,202,171,0) 12%, rgba(210,202,171,0)) 50px 0,
+    radial-gradient(circle at 50% 59%, #D2CAAB 3%, #364E27 4%, #364E27 11%, rgba(54,78,39,0) 12%, rgba(54,78,39,0)) 0 50px,
+    radial-gradient(circle at 50% 41%, #364E27 3%, #D2CAAB 4%, #D2CAAB 11%, rgba(210,202,171,0) 12%, rgba(210,202,171,0)) 0 50px,
+    radial-gradient(circle at 100% 50%, #D2CAAB 16%, rgba(210,202,171,0) 17%),
+    radial-gradient(circle at 0% 50%, #364E27 16%, rgba(54,78,39,0) 17%),
+    radial-gradient(circle at 100% 50%, #D2CAAB 16%, rgba(210,202,171,0) 17%) 50px 50px,
+    radial-gradient(circle at 0% 50%, #364E27 16%, rgba(54,78,39,0) 17%) 50px 50px;
+    background-color:#63773F;
+    background-size:100px 100px;
+}
+header {
+    height: 70px;
+    background-color: beige;
+}
+footer {
+    position: absolute;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 15px 0;
+    bottom: 0;
+    height: 70px;
+    width: 100%;
+    background-color: aquamarine;
+}
+main {
+    min-height: calc(100% - 140px);
+    background-color: white;
+    padding-bottom: 70px;
+    overflow: auto;
+    text-align: center;
+}
+.main-wrapper {
+    position: relative;
+    width: calc(100% - 300px);
+    min-height: 100%;
+    max-width: 1600px;
+    min-width: 900px;
+    margin: 0 auto;
+}
+.macth-game-header {
+    margin: 0;
+    padding: 15px 0;
+    text-align: center;
+    color: cornflowerblue;
+}
+.game-container-wrapper {
+    display: inline-block;
+    min-width: 650px;
+    height: 700px;
+    margin: 0 auto;
+}
+.game-settings-container {
+    margin-top: 70px;
+}
+.rules-list {
+    text-align: left;
+}
+input[type="radio"], label {
+    cursor: pointer;
+}
+.choose-column {
+    display: inline-block;
+    margin-left: 10px;
+}
+.start-button-wrapper {
+    margin-top: 40px;
+}
+.start-button-wrapper > button {
+    background-color: burlywood;
+    border: none;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 23px;
+    color: darkcyan;
+    outline: none;
+    border-radius: 3px;
+}
+.game-container {
+    margin-top: 50px;
+}
+.cards-set5 {
+    width: 750px;
+}
+.cards-set6 {
+    width: 650px;
+}
+.cards-set9 {
+    width: 860px;
+}
+.card {
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.card-front {
+    display: none;
+}
+.card-open .card-front {
+    display: block;
+}
+.card-open .card-back {
+    display: none;
+}
+.card-hidden {
+    visibility: hidden;
+}
+.footer-text {
+    font-size: 32px;
+    color: cornflowerblue;
+}
