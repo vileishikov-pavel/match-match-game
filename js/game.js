@@ -5,6 +5,7 @@ class Game {
 
         this.isClickCardEnabled = true;
         this.openCardsList = [];
+        this.gameTime = 0;
         this.removedCardCounter = 0;
         this.backSideURLs = {
             spaceURLs: 'images/card-back/space-back-side.png',
@@ -55,8 +56,21 @@ class Game {
         ];
     }
     start() {
+        this.infoContainer = document.querySelector('.game-info-container');
+        this.gameContainer = document.querySelector('.game-container');
+        this.gameCardContainer = document.querySelector('.game-card-container');
+        this.gameOverContainer = document.querySelector('.game-over-container');
+        this.quitButtons = document.getElementsByClassName('quit-game-button');
+        this.resetButton = document.querySelector('.reset-game-button');
+        this.timeContainer = document.querySelector('.time-text');
+
+        this.onCardClickedBinded = this.onCardClicked.bind(this);
+        this.quitGameClickedBinded = this.quitGameClicked.bind(this);
+        this.resetGameClickedBinded = this.resetGameClicked.bind(this);
+
         this.buildCardsList();
         this.renderCards();
+        this.startGameTimer();
         this.addListeners();
     }
     buildCardsList() {
@@ -90,17 +104,27 @@ class Game {
         }).shuffle();
     }
     renderCards() {
-        document.querySelector('.game-info-container').style.display = 'none';
-        let gameContainer = document.querySelector('.game-container');
+        this.infoContainer.style.display = 'none';
 
-        gameContainer.classList.add('cards-set' + this.difficulty);
+        this.gameCardContainer.innerHTML = '';
+        this.gameContainer.style.display = 'block';
+        this.gameContainer.classList.add('cards-set' + this.difficulty);
 
-        this.gameCardList.forEach((el) => gameContainer.appendChild(el));
+        this.gameCardList.forEach((el) => this.gameCardContainer.appendChild(el));
     }
     addListeners() {
         let cards = document.getElementsByClassName('card');
 
-        Array.from(cards).forEach((el) => el.addEventListener('click', this.onCardClicked.bind(this)));
+        Array.from(cards).forEach(el => el.addEventListener('click', this.onCardClickedBinded));
+        Array.from(this.quitButtons).forEach(el => el.addEventListener('click', this.quitGameClickedBinded));
+        this.resetButton.addEventListener('click', this.resetGameClickedBinded);
+    }
+    removeListeners() {
+        let cards = document.getElementsByClassName('card');
+
+        Array.from(cards).forEach(el => el.removeEventListener('click', this.onCardClickedBinded));
+        Array.from(this.quitButtons).forEach(el => el.removeEventListener('click', this.quitGameClickedBinded));
+        this.resetButton.removeEventListener('click', this.resetGameClickedBinded);
     }
     onCardClicked(e) {
         let currentCard = e.currentTarget;
@@ -112,11 +136,10 @@ class Game {
 
         if (this.openCardsList.length === 2) {
             this.isClickCardEnabled = false;
-            setTimeout(() => {
+            this.cardOpenTimeOut = setTimeout(() => {
                 if (this.openCardsList[0].dataset.number === this.openCardsList[1].dataset.number) {
 
-                    this.openCardsList[0].classList.add('card-hidden');
-                    this.openCardsList[1].classList.add('card-hidden');
+                    this.openCardsList.forEach(el => el.classList.add('card-hidden'));
 
                     this.removedCardCounter += 2;
                     this.openCardsList.length = 0;
@@ -124,17 +147,51 @@ class Game {
                     this.isClickCardEnabled = true;
 
                     if (this.removedCardCounter === this.gameCardList.length) {
-                        let gameContainer = document.querySelector('.game-container');
-                        gameContainer.innerHTML = '';
-                        gameContainer.style.display = 'none';
+                        clearInterval(this.gameInterval);
+                        this.gameCardContainer.innerHTML = '';
+                        this.gameContainer.style.display = 'none';
+                        this.gameOverContainer.style.display = 'block';
+                        this.gameOverContainer.querySelector('.time').innerHTML = '' + this.gameTime;
                     }
                 } else {
-                    this.openCardsList[0].classList.remove('card-open');
-                    this.openCardsList[1].classList.remove('card-open');
+                    this.openCardsList.forEach(el => el.classList.remove('card-open'));
                     this.openCardsList.length = 0;
                     this.isClickCardEnabled = true;
                 }
             }, 1000);
         }
+    }
+    startGameTimer() {
+        this.timeContainer.innerHTML = '' + this.gameTime;
+        this.gameInterval = setInterval(() => {
+            this.timeContainer.innerHTML = '' + ++this.gameTime;
+        }, 1000);
+    }
+    resetGameClicked() {
+        clearInterval(this.gameInterval);
+        clearTimeout(this.cardOpenTimeOut);
+        this.gameTime = 0;
+        if (this.openCardsList.length) {
+            this.openCardsList.forEach(el => el.classList.remove('card-open'));
+        }
+        this.openCardsList.length = 0;
+        this.isClickCardEnabled = true;
+        this.gameCardList = this.gameCardList.shuffle();
+        this.renderCards();
+        this.startGameTimer();
+    }
+    quitGameClicked() {
+        this.gameCardContainer.innerHTML = '';
+        this.gameContainer.style.display = 'none';
+        this.gameOverContainer.style.display = 'none';
+        this.infoContainer.style.display = 'block';
+        this.gameContainer.classList.remove('cards-set5', 'cards-set6', 'cards-set9');
+
+        this.removeListeners();
+        clearTimeout(this.cardOpenTimeOut);
+        clearInterval(this.gameInterval);
+        for (let prop in this) {
+            delete this[prop];
+        }        
     }
 }

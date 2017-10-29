@@ -3,6 +3,7 @@
     <head>
         <title>Match match game</title>
         <meta charset="utf-8">
+        <link rel="shortcut icon" href="images/favicon-16x16.png">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/style.css">        
     </head>
@@ -67,16 +68,33 @@
                                     </div>                                                                  
                             </form>
                             <div class="start-button-wrapper">
-                                <button id="start-game">Start game!</button>
+                                <button class="start-game-button">Start game!</button>
                             </div>  
                         </section>
                     </div>
                     <div class="game-container">
-                        <div></div>
-                        
+                        <div class="game-time">
+                            Game time:
+                            <span class="time-text"></span>
+                        </div>
+                        <div class="game-card-container"></div>
+                        <div class="change-game-buttons">
+                            <button class="reset-game-button">Reset</button>
+                            <button class="quit-game-button">Quit game</button>
+                        </div>
                     </div>
                     <div class="game-over-container">
-
+                        <h2 class="game-over-header">
+                            Great! You did it!
+                        </h2>
+                        <div class="time-container">
+                            Your final time is:
+                            <span class="time"></span>
+                        </div>
+                        <img src="images/Trophy.gif" alt="You did it!">
+                        <div class="quit-button-wrapper">
+                            <button class="quit-game-button">Quit game</button>
+                        </div>
                     </div>
                 </div>
             </main>
